@@ -6,7 +6,7 @@
       "description": "Shows an inspirational quote when you complete a habit and celebrates your streaks",
       "author": "Elysium Team",
       "version": "1.0.0",
-      "min_app_version": "1.0.0",
+      "min_app_version": "2.0.0",
       "repo": "https://github.com/elysiumis/elysium-daily-motivator",
       "downloads": 0,
       "verified": true,
@@ -16,7 +16,26 @@
       "tags": ["motivation", "habits", "streaks"],
       "created_at": "2024-11-26T00:00:00Z",
       "updated_at": "2024-11-26T00:00:00Z"
+    },
+    {
+      "id": "com.elysium.minimal-mode",
+      "name": "Minimal Mode",
+      "description": "Simplify Elysium's UI with monochrome icons and reduced visual effects for a cleaner, Obsidian-like experience.",
+      "author": "Elysium Team",
+      "version": "1.0.0",
+      "min_app_version": "2.0.0",
+      "repo": "https://github.com/elysiumis/elysium-minimal-mode",
+      "downloads": 0,
+      "verified": true,
+      "permissions": [
+        "theme",
+        "write:settings",
+        "customize:ui"
+      ],
+      "tags": ["theme", "minimal", "ui", "accessibility"],
+      "created_at": "2024-12-05T00:00:00Z",
+      "updated_at": "2024-12-05T00:00:00Z"
     }
   ],
-  "last_updated": "2024-11-26T00:00:00Z"
+  "last_updated": "2024-12-05T00:00:00Z"
 }
