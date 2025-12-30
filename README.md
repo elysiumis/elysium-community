@@ -36,6 +36,7 @@ Add an entry to `plugins.json`:
   "verified": false,
   "permissions": ["read:habits"],
   "tags": ["your", "tags"],
+  "category": "workflow",
   "created_at": "2024-01-01T00:00:00Z",
   "updated_at": "2024-01-01T00:00:00Z"
 }
@@ -50,6 +51,7 @@ Add an entry to `plugins.json`:
   "minAppVersion": "2.0.0",
   "author": "Your Name",
   "description": "What your plugin does",
+  "category": "workflow",
   "main": "main.js",
   "permissions": ["read:habits", "write:tasks"],
   "events": ["habit:completed", "task:created"],
@@ -71,6 +73,17 @@ Add an entry to `plugins.json`:
   ]
 }
 ```
+
+## Plugin Categories
+
+- `workflow` - Workflow automation plugins
+- `template` - Template plugins
+- `automation` - Automation plugins
+- `theme` - Theme/appearance plugins
+- `dashboard` - Dashboard widgets
+- `habits` - Habit tracking plugins
+- `productivity` - Productivity tools
+- `other` - Other plugins
 
 ## Available Permissions
 
