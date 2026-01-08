@@ -32,6 +32,11 @@ Add an entry to `plugins.json`:
   "version": "1.0.0",
   "min_app_version": "2.0.0",
   "repo": "https://github.com/yourname/your-plugin-repo",
+  "funding_url": "https://ko-fi.com/yourname",
+  "support_links": [
+    { "label": "Ko-fi", "url": "https://ko-fi.com/yourname" },
+    { "label": "Patreon", "url": "https://patreon.com/yourname" }
+  ],
   "downloads": 0,
   "verified": false,
   "permissions": ["read:habits"],
@@ -50,10 +55,17 @@ Add an entry to `plugins.json`:
   "version": "1.0.0",
   "minAppVersion": "2.0.0",
   "author": "Your Name",
+  "authorUrl": "https://yourwebsite.com",
   "description": "What your plugin does",
+  "repo": "https://github.com/yourname/your-plugin",
   "category": "workflow",
   "main": "main.js",
   "permissions": ["read:habits", "write:tasks"],
+  "fundingUrl": "https://ko-fi.com/yourname",
+  "supportLinks": [
+    { "label": "Ko-fi", "url": "https://ko-fi.com/yourname" },
+    { "label": "GitHub Sponsors", "url": "https://github.com/sponsors/yourname" }
+  ],
   "events": ["habit:completed", "task:created"],
   "commands": [
     {
@@ -72,6 +84,55 @@ Add an entry to `plugins.json`:
     }
   ]
 }
+```
+
+## Support Links
+
+Plugin developers can add support links to encourage users to support their work. These appear as a heart icon on installed plugins and in a "Support the Developer" section on the install screen.
+
+**In plugins.json (directory listing):**
+```json
+{
+  "support_links": [
+    { "label": "Ko-fi", "url": "https://ko-fi.com/yourname" },
+    { "label": "PayPal", "url": "https://paypal.me/yourname" },
+    { "label": "My Website", "url": "https://yourwebsite.com/support" },
+    { "label": "Venmo", "url": "https://venmo.com/yourname", "icon": "dollarsign.circle.fill" }
+  ]
+}
+```
+
+**In manifest.json (plugin repo):**
+```json
+{
+  "supportLinks": [
+    { "label": "Patreon", "url": "https://patreon.com/yourname" },
+    { "label": "GitHub Sponsors", "url": "https://github.com/sponsors/yourname" },
+    { "label": "Buy Me a Coffee", "url": "https://buymeacoffee.com/yourname" },
+    { "label": "Donate via PayPal", "url": "https://paypal.me/yourname" },
+    { "label": "My Website", "url": "https://yourwebsite.com" }
+  ]
+}
+```
+
+The `label` field is freeform - you can use any text you want!
+
+**Auto-detected icons (based on label text):**
+| Label contains | Icon |
+|----------------|------|
+| Patreon | heart.fill |
+| Ko-fi, Coffee | cup.and.saucer.fill |
+| PayPal | creditcard.fill |
+| GitHub, Sponsor | star.fill / heart.circle.fill |
+| Donate, Donation | gift.fill |
+| Website, Site | globe |
+| Discord | bubble.left.and.bubble.right.fill |
+| Twitter, X.com | at |
+
+**Custom icons:** For platforms not listed above (like Venmo, Cash App, etc.), specify any [SF Symbol](https://developer.apple.com/sf-symbols/) using the optional `icon` field:
+```json
+{ "label": "Venmo", "url": "https://venmo.com/you", "icon": "dollarsign.circle.fill" }
+{ "label": "Cash App", "url": "https://cash.app/$you", "icon": "banknote.fill" }
 ```
 
 ## Plugin Categories
