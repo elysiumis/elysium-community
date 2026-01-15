@@ -1,0 +1,103 @@
+name: Validate Plugin Submission
+
+on:
+  pull_request:
+    paths:
+      - 'plugins/*.json'
+    types: [opened, synchronize, reopened]
+
+jobs:
+  validate:
+    name: Validate Plugin
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Get changed plugin files
+        id: changed-files
+        uses: tj-actions/changed-files@v44
+        with:
+          files: plugins/*.json
+
+      - name: Validate plugin submissions
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          echo "Validating: ${{ steps.changed-files.outputs.all_changed_files }}"
+          node scripts/validate.js ${{ steps.changed-files.outputs.all_changed_files }}
+        continue-on-error: true
+        id: validate
+
+      - name: Comment on PR
+        if: steps.changed-files.outputs.any_changed == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+
+            let comment = '';
+
+            try {
+              const result = JSON.parse(fs.readFileSync('validation-result.json', 'utf8'));
+              comment = result.markdown;
+            } catch (e) {
+              comment = '## ❌ Validation Error\n\nFailed to run validation script. Please check the workflow logs.';
+            }
+
+            // Find existing bot comment
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            const botComment = comments.find(c =>
+              c.user.type === 'Bot' &&
+              c.body.includes('Plugin Validation Results')
+            );
+
+            if (botComment) {
+              // Update existing comment
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: comment
+              });
+            } else {
+              // Create new comment
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: comment
+              });
+            }
+
+      - name: Set check status
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          if [ -f validation-result.json ]; then
+            PASSED=$(node -e "console.log(JSON.parse(require('fs').readFileSync('validation-result.json')).allPassed)")
+            if [ "$PASSED" = "true" ]; then
+              echo "✅ All validations passed"
+              exit 0
+            else
+              echo "❌ Validation failed"
+              exit 1
+            fi
+          else
+            echo "❌ No validation results found"
+            exit 1
+          fi

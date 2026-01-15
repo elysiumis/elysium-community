@@ -17,11 +17,36 @@ elysium-community/
 
 1. Create your own public GitHub repository for your plugin
 2. Include `manifest.json` and `main.js` in the repo root
-3. Submit a Pull Request to add your plugin to `plugins.json`
+3. Submit your plugin using one of the methods below
 
 ## Submitting a Plugin
 
-Add an entry to `plugins.json`:
+### Option 1: Web Form (Recommended)
+
+Submit your plugin at **[elysium.is/plugins/submit](https://elysium.is/plugins/submit)**
+
+### Option 2: GitHub Pull Request
+
+1. Fork this repository
+2. Create a file `plugins/{your-plugin-id}.json`:
+   ```json
+   {
+     "id": "com.yourname.plugin-name",
+     "name": "Plugin Name",
+     "description": "What it does",
+     "author": "Your Name",
+     "repo": "https://github.com/yourname/your-plugin-repo"
+   }
+   ```
+3. Open a Pull Request - our bot will automatically validate your submission
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed instructions.
+
+---
+
+### Directory Entry Format
+
+The full plugin entry in `plugins.json`:
 
 ```json
 {
